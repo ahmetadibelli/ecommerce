@@ -1,74 +1,80 @@
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const expressJwt = require('express-jwt');
-const {errorHandler} = require('../helpers/dbErrorHandler');
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
+const { errorHandler } = require("../helpers/dbErrorHandler");
+const AppError = require("../helpers/appError");
 
+const signToken = (id) =>
+  jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES,
+  });
 
-exports.signup = (req, res) => {
-    console.log('req.body', req.body);
-    const user = new User(req.body);
-    user.save((err, user) => {
-        if (err) {
-            return res.status(400).json({
-                err: errorHandler(err)
-            });
-        }
-        user.salt = undefined
-        user.hashed_password = undefined
-        res.json({
-            user
-        });
-    });
-  
+const signInAndSend = (user, res, statusCode = 200) => {
+  const token = signToken(user._id);
+  res.cookie("jwt", token, {
+    expires: new Date(Date.now() + process.env.COOKIE_EXPIRES * 60 * 60 * 1000),
+    httpOnly: true,
+  });
+  user.hashed_password = undefined;
+  user.salt = undefined;
+  res.status(statusCode).json({ status: "success", data: { user, token } });
 };
 
-exports.signin = (req, res) => {
-    const {email, password} = req.body
-    User.findOne({email}, (err, user) => {
-        if(err || !user) {
-            return res.status(400).json({
-               error: 'User with that email does not exist. Please sign up' 
-            });
-        }
+exports.signup = async (req, res, next) => {
+  console.log("req.body", req.body);
+  try {
+    const user = await User.create(req.body);
+    signInAndSend(user, res);
+  } catch (error) {
+    console.log(error);
+    next(new AppError(errorHandler(error), 400));
+  }
+};
 
-        if(!user.authenticate(password)) {
-            return res.status(401).json({
-                error: 'Email and password do not match'
-            })
-        }
+exports.signin = async (req, res, next) => {
+  const { email, password } = req.body;
 
-        const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET)
-        res.cookie('t', token, {expire: new Date() + 9999})
-        const {_id, name, email, role} = user
-        return res.json({token, user: {_id, email, name, role}})
+  if (!email) return next(new AppError("Email is required", 400));
+  if (!password) return next(new AppError("Password is required", 400));
 
-    });
+  try {
+    const user = await User.findOne({ email }).select("+hashed_password +salt");
+    if (!user)
+      throw new AppError(
+        "User with that email does not exist. Please sign up!",
+        400
+      );
+
+    if (!user.authenticate(password)) {
+      throw new AppError("Invalid email or password", 400);
+    }
+    signInAndSend(user, res, 200);
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.signout = (req, res) => {
-    res.clearCookie('t')
-    res.json({message: "Signout success"})
+  res.clearCookie("t");
+  res.json({ message: "Signout success" });
 };
-
 
 exports.requireSignin = expressJwt({
   secret: process.env.JWT_SECRET,
-  userProperty: "auth"
+  userProperty: "auth",
 });
 
-
 exports.isAuth = (req, res, next) => {
-    let user = req.profile && req.auth && req.profile._id == req.auth._id
-    if (!user) {
-      return res.status(403).json({
-        error: "Acces denied",
-      });
-    }
-    next();
+  let user = req.profile && req.auth && req.profile._id == req.auth._id;
+  if (!user) {
+    return res.status(403).json({
+      error: "Acces denied",
+    });
+  }
+  next();
 };
 
 exports.isAdmin = (req, res, next) => {
-  
   if (req.profile.role === 0) {
     return res.status(403).json({
       error: "Admin resource! Acces denied",
@@ -76,5 +82,3 @@ exports.isAdmin = (req, res, next) => {
   }
   next();
 };
-
-
