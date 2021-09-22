@@ -10,9 +10,12 @@ require("dotenv").config();
 // import
 // global error controller
 const handleErrors = require("./controllers/globalErrorController");
+//Routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const categoryRoutes = require("./routes/category");
+const carRoutes = require("./routes/car");
+const reviewRouts = require("./routes/review");
 const AppError = require("./helpers/appError");
 
 // app
@@ -25,6 +28,7 @@ mongoose
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(() => console.log("DB Connected"))
   .catch((err) => {
@@ -43,6 +47,8 @@ app.use(expressValidator());
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
+app.use("/api", carRoutes);
+app.use("/api", reviewRouts);
 
 //Not Found Route
 app.all("*", (req, res, next) => {

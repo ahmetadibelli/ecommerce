@@ -1,13 +1,18 @@
 const express = require("express");
 const router = express.Router();
 
-const { create } = require("../controllers/category");
-const { requireSignin, isAdmin } = require("../controllers/auth");
-const { userById } = require("../controllers/user");
+const categoryController = require("../controllers/category");
+const { protect, restrictTo } = require("../middlewares/authMiddlewares");
+const { categoryValidator } = require("../validator");
 
-
-router.post("/category/create/:userId", requireSignin, isAdmin, create);
-router.param("userId", userById);
-
-
+//protect all routes
+router.use(protect);
+router
+  .route("/category")
+  .post(restrictTo(1), categoryValidator, categoryController.create); // restrict to admin
+router
+  .route("/category/:id")
+  .get(categoryController.getCategory)
+  .patch(categoryController.updateCategory)
+  .delete(categoryController.deleteCategory);
 module.exports = router;

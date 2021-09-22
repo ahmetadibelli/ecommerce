@@ -1,6 +1,5 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const expressJwt = require("express-jwt");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const AppError = require("../helpers/appError");
 
@@ -17,7 +16,7 @@ const signInAndSend = (user, res, statusCode = 200) => {
   });
   user.hashed_password = undefined;
   user.salt = undefined;
-  res.status(statusCode).json({ status: "success", data: { user, token } });
+  res.status(statusCode).json({ status: "success", data: { user }, token });
 };
 
 exports.signup = async (req, res, next) => {
@@ -55,30 +54,6 @@ exports.signin = async (req, res, next) => {
 };
 
 exports.signout = (req, res) => {
-  res.clearCookie("t");
+  res.clearCookie("jwt");
   res.json({ message: "Signout success" });
-};
-
-exports.requireSignin = expressJwt({
-  secret: process.env.JWT_SECRET,
-  userProperty: "auth",
-});
-
-exports.isAuth = (req, res, next) => {
-  let user = req.profile && req.auth && req.profile._id == req.auth._id;
-  if (!user) {
-    return res.status(403).json({
-      error: "Acces denied",
-    });
-  }
-  next();
-};
-
-exports.isAdmin = (req, res, next) => {
-  if (req.profile.role === 0) {
-    return res.status(403).json({
-      error: "Admin resource! Acces denied",
-    });
-  }
-  next();
 };
