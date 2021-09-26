@@ -1,5 +1,6 @@
 const Car = require("../models/car");
 const { errorHandler } = require("../helpers/dbErrorHandler");
+const ApiFeatures = require("../util/apiFeatures");
 const AppError = require("../helpers/appError");
 
 exports.setUserId = async (req, res, next) => {
@@ -15,7 +16,21 @@ exports.createCar = async (req, res, next) => {
     next(new AppError(errorHandler(error), 400));
   }
 };
-
+exports.getAllCars = async (req, res, next) => {
+  try {
+    const features = new ApiFeatures(Car.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const cars = await features.query;
+    res
+      .status(200)
+      .json({ status: "success", data: { cars }, results: cars.length });
+  } catch (error) {
+    next(new AppError(errorHandler(error), 400));
+  }
+};
 exports.getcar = async (req, res, next) => {
   try {
     const car = await Car.findById(req.params.id);
