@@ -5,7 +5,7 @@ const uuidv1 = require("uuidv1");
 
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    fullName: {
       type: String,
       trim: true,
       required: true,
@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: Number,
-      default: 0,
+      default: 0, //0=user,1=admin
     },
 
     history: {

@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const expressValidator = require("express-validator");
@@ -36,7 +37,7 @@ mongoose
   });
 
 // middlewares
-
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(cookieParser());
