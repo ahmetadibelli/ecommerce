@@ -2,16 +2,16 @@ const Category = require("../models/category");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const AppError = require("../helpers/appError");
 
-exports.create = async (req, res, next) => {
+exports.getAllCategory = async (req, res, next) => {
   try {
-    const category = await Category.create(req.body);
-    res.status(200).json({ status: "success", data: { category } });
+    const categories = await Category.find();
+    res.status(200).json({ status: "success", data: { categories } });
   } catch (error) {
     next(new AppError(errorHandler(error), 400));
   }
 };
 
-exports.createCategory = async (req, res, next) => {
+exports.create = async (req, res, next) => {
   try {
     const category = await Category.create(req.body);
     res.status(200).json({ status: "success", data: { category } });

@@ -63,7 +63,7 @@ const Navigation = () => {
                       }`}
                       to="/dashboard"
                     >
-                      {user.fullName}
+                      Dashboard
                     </Link>
                   </li>
                 )}

@@ -5,6 +5,7 @@ const categoryController = require("../controllers/category");
 const { protect, restrictTo } = require("../middlewares/authMiddlewares");
 const { categoryValidator } = require("../validator");
 
+router.get("/category", categoryController.getAllCategory);
 //protect all routes
 router.use(protect);
 router

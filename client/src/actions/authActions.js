@@ -14,7 +14,7 @@ export const signup = (body, push) => async (dispatch) => {
     push("/");
   } catch (error) {
     console.log(error.response);
-    const message = error?.response?.data?.error || "something went wrong";
+    const message = error?.response?.data?.err || "something went wrong";
     dispatch({ type: actionTypes.SIGNUP_FAIL, payload: message });
   }
 };
@@ -30,7 +30,7 @@ export const signin = (body, push) => async (dispatch) => {
     push("/");
   } catch (error) {
     console.log(error.response);
-    const message = error?.response?.data?.message || "something went wrong";
+    const message = error?.response?.data?.err || "something went wrong";
     dispatch({ type: actionTypes.SIGNIN_FAIL, payload: message });
   }
 };
@@ -47,7 +47,7 @@ export const signout = () => async (dispatch) => {
     window.location.assign("/");
   } catch (error) {
     console.log(error.response);
-    const message = error?.response?.data?.message || "something went wrong";
+    const message = error?.response?.data?.err || "something went wrong";
     alert(message);
   }
 };

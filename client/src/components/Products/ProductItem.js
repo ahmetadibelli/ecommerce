@@ -32,7 +32,7 @@ const ProductItem = ({ product, toggleLike, submitOrder }) => {
               onClick={orderHandler}
               className="btn btn-danger mt-3 btn-block"
             >
-              <i className="fas fa-shopping-cart"></i> Order now
+              <i className="fas fa-shopping-cart"></i> Add to cart
             </button>
           </div>
         </div>
