@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { getCars } from "../../actions/carActions";
+
 const Pagination = () => {
+  const dispatch = useDispatch();
+  const { totalCars } = useSelector((state) => state.carList);
+
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const page = +params.get("page") || 1;
+  const pageNumber = totalCars !== 0 ? Math.ceil(totalCars / 4) : 0;
+  useEffect(() => {
+    dispatch(getCars(page));
+  }, [dispatch, page]);
   // console.log(page, params);
+
+  if (totalCars <= 4) return null;
   return (
     <div className="row py-3 ">
       <div className="col">
@@ -15,22 +27,19 @@ const Pagination = () => {
                 Previous
               </Link>
             </li>
-            <li className={`page-item ${page === 1 ? "active" : ""}`}>
-              <Link to="/?page=1" className={`page-link`}>
-                1
-              </Link>
-            </li>
-            <li className={`page-item ${page === 2 ? "active" : ""}`}>
-              <Link to="/?page=2" className="page-link">
-                2
-              </Link>
-            </li>
-            <li className={`page-item ${page === 3 ? "active" : ""}`}>
-              <Link to="/?page=3" className="page-link">
-                3
-              </Link>
-            </li>
-            <li className={`page-item ${page === 3 ? "disabled" : ""}`}>
+            {[...new Array(pageNumber)].map((_, index) => (
+              <li
+                key={index}
+                className={`page-item ${page === index + 1 ? "active" : ""}`}
+              >
+                <Link to={`/?page=${index + 1}`} className={`page-link`}>
+                  {index + 1}
+                </Link>
+              </li>
+            ))}
+            <li
+              className={`page-item ${page === pageNumber ? "disabled" : ""}`}
+            >
               <Link to={`/?page=${page + 1}`} className="page-link">
                 Next
               </Link>

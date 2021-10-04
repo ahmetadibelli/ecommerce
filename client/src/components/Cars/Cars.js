@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { getProducts } from "../../fakeProductService";
-import ProductItem from "./ProductItem";
+import CarItem from "./CarsItem";
+import { getCars } from "../../actions/carActions";
+
 const Products = () => {
+  const dispatch = useDispatch();
+  const { loading, cars } = useSelector((state) => state.carList);
   const [products, setProducts] = useState(getProducts());
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -12,14 +17,13 @@ const Products = () => {
   const range = 4;
   const startAt = (page - 1) * range;
   const endAt = total / range + startAt + 1;
-  // console.log(startAt, endAt);
-  const toggleLikeHandler = (id) => {
-    setProducts((state) =>
-      state.map((item) =>
-        item._id === id ? { ...item, liked: !item.liked } : item
-      )
-    );
-  };
+
+  useEffect(() => {
+    if (!cars.length) {
+      dispatch(getCars());
+    }
+  }, [dispatch, cars]);
+
   const submitOrderHandler = (amount, id) => {
     setProducts((state) =>
       state.map((item) =>
@@ -29,16 +33,18 @@ const Products = () => {
       )
     );
   };
+
   return (
     <div className="row">
-      {products.slice(startAt, endAt).map((product) => (
-        <ProductItem
-          toggleLike={toggleLikeHandler}
-          key={product._id}
-          product={product}
-          submitOrder={submitOrderHandler}
-        />
-      ))}
+      {loading && (
+        <div className="col-md-6" style={{ height: "35rem" }}>
+          <h5>Loading...</h5>
+        </div>
+      )}
+      {!loading &&
+        cars.map((car) => (
+          <CarItem key={car._id} car={car} submitOrder={submitOrderHandler} />
+        ))}
     </div>
   );
 };

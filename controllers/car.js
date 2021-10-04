@@ -24,9 +24,13 @@ exports.getAllCars = async (req, res, next) => {
       .limitFields()
       .paginate();
     const cars = await features.query;
-    res
-      .status(200)
-      .json({ status: "success", data: { cars }, results: cars.length });
+    const totalDocuments = await Car.countDocuments();
+    res.status(200).json({
+      status: "success",
+      data: { cars },
+      results: cars.length,
+      totalDocuments,
+    });
   } catch (error) {
     next(new AppError(errorHandler(error), 400));
   }

@@ -32,4 +32,9 @@ const carSchema = new mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+carSchema.pre(/^find/, function (next) {
+  this.populate("category", "name");
+  next();
+});
+
 module.exports = mongoose.model("Car", carSchema);

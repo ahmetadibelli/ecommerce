@@ -1,32 +1,31 @@
 import React, { useState } from "react";
 
-const ProductItem = ({ product, toggleLike, submitOrder }) => {
+const ProductItem = ({ car, submitOrder }) => {
   const [amount, setAmount] = useState(1);
   const orderHandler = () => {
     setAmount(1);
-    if (amount > product.numberInStock) {
+    if (amount > car.numberInStock) {
       alert("The order will not be delivered!");
       return;
     }
-    submitOrder(amount, product._id);
+    submitOrder(amount, car._id);
   };
 
   return (
     <div className="col-md-3 col-sm-6 col-12">
       <div className="card">
-        <img
-          className="card-img"
-          src={product.imgUrl}
-          alt={product.productName}
-          height="300"
-        />
+        <img className="card-img" src={car.image} alt={car.name} height="300" />
 
         <div className="card-body">
-          <h4 className="card-title">{product.productName}</h4>
+          <h4 className="card-title">{car.name}</h4>
           <h6 className="card-subtitle mb-2 text-muted">
-            Category: {product.category}
+            Category: {car.category.name}
           </h6>
-          <p className="lead">It is a long established fact that a reader...</p>
+          <h6 className="card-subtitle mb-2 text-muted">Price: ${car.price}</h6>
+          <p className="lead">
+            {car.comment.slice(0, 100)}
+            {car.comment.length > 100 ? "..." : ""}
+          </p>
           <div className="d-grid">
             <button
               onClick={orderHandler}

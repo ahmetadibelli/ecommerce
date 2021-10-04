@@ -69,6 +69,16 @@ const Navigation = () => {
                 )}
                 <li className="nav-item">
                   <Link
+                    className={`nav-link ${
+                      pathname === "/add-car" ? "active" : ""
+                    }`}
+                    to="/add-car"
+                  >
+                    Add Car
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
                     onClick={logoutHandler}
                     className={`nav-link ${
                       pathname === "/logout" ? "active" : ""

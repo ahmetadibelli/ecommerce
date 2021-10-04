@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/types/adminActionTypes";
+import * as actionTypes from "../actions/types/categoryActionTypes";
 export const categoryListReducers = (
   state = {
     categories: [],

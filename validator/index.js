@@ -3,7 +3,7 @@ const catchAndSendError = (req, res, next) => {
   if (errors) {
     const firstError = errors.map((error) => error.msg)[0];
     console.log(errors);
-    return res.status(400).json({ error: firstError });
+    return res.status(400).json({ err: firstError });
   }
   next();
 };
@@ -31,7 +31,7 @@ exports.userSignupValidator = (req, res, next) => {
 
 exports.carValidator = (req, res, next) => {
   req.check("name", "name is required").notEmpty();
-  req.check("description", "description is required").notEmpty();
+  req.check("comment", "comment is required").notEmpty();
   req
     .check("price", "price is required")
     .notEmpty()

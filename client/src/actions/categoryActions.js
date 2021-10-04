@@ -1,5 +1,5 @@
-import * as actionTypes from "./types/adminActionTypes";
-import * as apis from "../apis/adminApis";
+import * as actionTypes from "./types/categoryActionTypes";
+import * as apis from "../apis/categoryApis";
 
 export const getCategories = () => async (dispatch) => {
   dispatch({ type: actionTypes.GET_CATEGORY_LIST_REQUEST });
