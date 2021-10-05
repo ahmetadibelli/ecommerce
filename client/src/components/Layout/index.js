@@ -18,7 +18,13 @@ const Layout = ({ children }) => {
   return (
     <>
       <Navigation />
-      <main className="container my-4">{children}</main>
+      <main
+        className="container"
+        style={{ margin: "6rem auto 2rem auto" }}
+        role="main"
+      >
+        {children}
+      </main>
       <Footer />
     </>
   );

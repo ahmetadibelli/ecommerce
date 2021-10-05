@@ -15,6 +15,10 @@ import {
   deleteCarReducer,
 } from "./carReducers";
 
+import { cartReducer } from "./cartReducer";
+
+import { updateUserReducer } from "./userReducer";
+
 const state = {
   //auth
   auth: authReducer,
@@ -29,6 +33,10 @@ const state = {
   addCar: addCarReducer,
   updateCar: updateCarReducer,
   deleteCar: deleteCarReducer,
+  // user
+  updateUser: updateUserReducer,
+  //cart
+  cart: cartReducer,
 };
 
 export default combineReducers(state);

@@ -6,6 +6,7 @@ import { signout } from "../../actions/authActions";
 const Navigation = () => {
   const dispatch = useDispatch();
   const { user, token } = useSelector((state) => state.auth);
+  const { cars } = useSelector((state) => state.cart);
   const isAdmin = user.role === 1;
   const isLoggedin = token;
 
@@ -17,7 +18,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container">
         <Link className="navbar-brand" to="/">
           <i className="fas fa-car"></i>
@@ -127,6 +128,11 @@ const Navigation = () => {
               Search
             </button>
           </form>
+
+          <Link className="cartIcon" to="/cart">
+            <span className="itemAmount">{cars.length}</span>
+            <i className="fas fa-cart-plus"></i>
+          </Link>
         </div>
       </div>
     </nav>

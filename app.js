@@ -46,9 +46,9 @@ app.use(expressValidator());
 // routes middleware
 
 app.use("/api", authRoutes);
+app.use("/api", carRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
-app.use("/api", carRoutes);
 app.use("/api", reviewRouts);
 
 //Not Found Route
