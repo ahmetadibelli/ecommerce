@@ -45,11 +45,11 @@ app.use(expressValidator());
 
 // routes middleware
 
-app.use("/api", authRoutes);
-app.use("/api", carRoutes);
-app.use("/api", userRoutes);
-app.use("/api", categoryRoutes);
-app.use("/api", reviewRouts);
+app.use("/api/auth", authRoutes);
+app.use("/api/car", carRoutes);
+app.use("/api/review", reviewRouts);
+app.use("/api/user", userRoutes);
+app.use("/api/category", categoryRoutes);
 
 //Not Found Route
 app.all("*", (req, res, next) => {

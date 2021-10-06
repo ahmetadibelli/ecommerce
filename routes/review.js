@@ -4,6 +4,8 @@ const authMiddlewares = require("../middlewares/authMiddlewares");
 const reviewController = require("../controllers/review");
 const { reviewValidator } = require("../validator");
 
+router.get("/review/all/:carId", reviewController.getAllReviews);
+
 router.use(authMiddlewares.protect);
 router
   .route("/review")

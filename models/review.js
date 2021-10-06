@@ -67,4 +67,9 @@ reviewSchema.post(/^findOneAnd/, async function () {
   await this.r.constructor.calcAvgRating(this.r.car);
 });
 
+reviewSchema.pre(/^find/, function (next) {
+  this.populate("user", "fullName");
+  next();
+});
+
 module.exports = mongoose.model("Review", reviewSchema);

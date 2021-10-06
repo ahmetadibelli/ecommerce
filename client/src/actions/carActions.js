@@ -69,3 +69,24 @@ export const deleteCar = (id) => async (dispatch) => {
     dispatch({ type: actionTypes.DELETE_CAR_FAIL, payload: message });
   }
 };
+
+export const searchCar = (title) => async (dispatch) => {
+  dispatch({ type: actionTypes.SEARCH_CAR_REQUEST });
+  const query = `name[regex]=${title}`;
+  try {
+    const { data } = await apis.allCars(query);
+    dispatch({
+      type: actionTypes.SEARCH_CAR_SUCCESS,
+      payload: data.data.cars,
+      totalCars: data.totalDocuments,
+    });
+  } catch (error) {
+    console.log(error.response);
+    const message = error?.response?.data?.err || "something went wrong";
+    dispatch({ type: actionTypes.SEARCH_CAR_FAIL, payload: message });
+  }
+};
+
+export const setDetailCar = (car) => (dispatch) => {
+  dispatch({ type: actionTypes.SET_DETAIL_CAR, payload: car });
+};

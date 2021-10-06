@@ -13,11 +13,15 @@ import {
   addCarReducer,
   updateCarReducer,
   deleteCarReducer,
+  searchCarListReducer,
+  detailCarReducer,
 } from "./carReducers";
 
 import { cartReducer } from "./cartReducer";
 
 import { updateUserReducer } from "./userReducer";
+
+import { allCarReviewsReducer, createReviewReducer } from "./reviewReducer";
 
 const state = {
   //auth
@@ -33,10 +37,15 @@ const state = {
   addCar: addCarReducer,
   updateCar: updateCarReducer,
   deleteCar: deleteCarReducer,
+  searchCarList: searchCarListReducer,
+  detailCar: detailCarReducer,
   // user
   updateUser: updateUserReducer,
   //cart
   cart: cartReducer,
+  //reviews
+  allCarReviews: allCarReviewsReducer,
+  createReview: createReviewReducer,
 };
 
 export default combineReducers(state);

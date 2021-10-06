@@ -2,6 +2,18 @@ const Review = require("../models/review");
 const AppError = require("../helpers/appError");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
+/// Get all reviews by a car
+exports.getAllReviews = async (req, res, next) => {
+  const { carId } = req.params;
+  try {
+    const reviews = await Review.find({ car: carId }).sort("-createdAt");
+    res.status(200).json({ status: "success", data: { reviews } });
+  } catch (error) {
+    console.log(error);
+    next(new AppError(errorHandler(error), 400));
+  }
+};
+
 exports.setUserId = (req, res, next) => {
   if (!req.body.user) req.body.user = req.user._id;
   next();

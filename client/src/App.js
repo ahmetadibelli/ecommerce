@@ -8,6 +8,8 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import AddCar from "./components/AddCar/AddCar";
 import Profile from "./components/Profile";
 import Cart from "./components/Cart/Cart";
+import Search from "./components/Search/Search";
+import CarDetails from "./components/CarDetails/CarDetails";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/add-car" component={AddCar} />
         <Route path="/profile" component={Profile} />
         <Route path="/cart" component={Cart} />
+        <Route path="/search" component={Search} />
+        <Route path="/car-details/:id" component={CarDetails} />
         <Route
           path="/"
           render={() => (

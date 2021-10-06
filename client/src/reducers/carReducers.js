@@ -141,3 +141,43 @@ export const deleteCarReducer = (
       return state;
   }
 };
+
+export const searchCarListReducer = (
+  state = { cars: [], loading: false, error: null, totalCars: 0 },
+  action
+) => {
+  switch (action.type) {
+    case actionTypes.SEARCH_CAR_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.SEARCH_CAR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cars: action.payload,
+        totalCars: action.totalCars,
+      };
+    case actionTypes.SEARCH_CAR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const detailCarReducer = (state = { car: {} }, action) => {
+  switch (action.type) {
+    case actionTypes.SET_DETAIL_CAR:
+      return {
+        ...state,
+        car: action.payload,
+      };
+    default:
+      return state;
+  }
+};

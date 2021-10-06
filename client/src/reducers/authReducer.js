@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/types/authActionTypes";
+import { UPDATE_USER_SUCCESS } from "../actions/types/userActionTypes";
 
 export const authReducer = (
   state = { user: {}, token: null, loading: false, error: null },
@@ -32,6 +33,11 @@ export const authReducer = (
         ...state,
         user: action.payload.user,
         token: action.payload.token,
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
       };
     case actionTypes.SIGNOUT:
       return {

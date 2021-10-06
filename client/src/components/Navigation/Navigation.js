@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { signout } from "../../actions/authActions";
 
 const Navigation = () => {
   const dispatch = useDispatch();
+  const input = useRef(null);
   const { user, token } = useSelector((state) => state.auth);
   const { cars } = useSelector((state) => state.cart);
   const isAdmin = user.role === 1;
   const isLoggedin = token;
 
   const { pathname } = useLocation();
+  const { push } = useHistory();
 
   const logoutHandler = (e) => {
     e.preventDefault();
     dispatch(signout());
+  };
+  const searchHandler = (e) => {
+    e.preventDefault();
+    const value = input.current.value;
+    if (!value) return;
+    push(`/search?title=${value}`);
   };
 
   return (
@@ -117,8 +125,9 @@ const Navigation = () => {
               </>
             )}
           </ul>
-          <form className="d-flex">
+          <form className="d-flex" onSubmit={searchHandler}>
             <input
+              ref={input}
               className="form-control me-2"
               type="search"
               placeholder="Search"
