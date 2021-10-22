@@ -35,16 +35,25 @@ const CarDetails = () => {
             </div>
             <div className="col-md-8">
               <h4 className="card-title">{car.name}</h4>
+              <h5 className="card-subtitle mb-2" style={{ color: "#f39c12" }}>
+                Rating: <i className="fas fa-star"></i> {car.ratingsAverage}
+              </h5>
               <h6 className="card-subtitle mb-2 text-muted">
                 Category: {car.category.name}
               </h6>
               <h6 className="card-subtitle mb-2 text-muted">
                 Price:{car.price}
               </h6>
-              <h6 className="card-subtitle mb-2" style={{ color: "#f39c12" }}>
-                Rating: <i className="fas fa-star"></i> {car.ratingsAverage}
+
+              <h6 className="card-subtitle mb-2 text-muted">
+                Mileage: {car.mileage} miles
               </h6>
-              <p className="lead">{car.comment}</p>
+              <h6 className="card-subtitle mb-2 text-muted">
+                Brand: {car.brand}
+              </h6>
+              <h6 className="card-subtitle mb-2 text-muted">
+                Location: {car.location}
+              </h6>
               <div className="d-grid">
                 {isAdded ? (
                   <button

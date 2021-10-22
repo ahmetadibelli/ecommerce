@@ -3,13 +3,14 @@ const mongoose = require("mongoose");
 const carSchema = new mongoose.Schema(
   {
     name: String,
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+    description: String,
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     image: {
       type: String,
@@ -26,17 +27,7 @@ const carSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-
-    mileage: {
-      type: Number,
-      default: 0,
-    },
-    location: {
-      type: String,
-    },
-    brand: {
-      type: String,
-    },
+    comment: String,
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

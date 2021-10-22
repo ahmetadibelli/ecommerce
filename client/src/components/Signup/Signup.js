@@ -30,7 +30,7 @@ const Signup = () => {
           {error && <div className="alert alert-danger">{error}</div>}
           <div className="mb-3">
             <label htmlFor="fullName" className="form-label">
-              Full Name
+              Username
             </label>
             <input
               type="text"

@@ -6,7 +6,7 @@ import { addCar } from "../../actions/carActions";
 
 const AddCar = () => {
   const dispatch = useDispatch();
-  const { loading, error, car } = useSelector((state) => state.addCar);
+  const { loading } = useSelector((state) => state.addCar);
   const { categories, loading: fetchingCat } = useSelector(
     (state) => state.categoryList
   );
@@ -26,7 +26,9 @@ const AddCar = () => {
     setValue("category", "");
     setValue("price", "");
     setValue("image", "");
-    setValue("comment", "");
+    setValue("mileage", "");
+    setValue("location", "");
+    setValue("brand", "");
   };
 
   const submitHandler = (data) => {
@@ -35,41 +37,12 @@ const AddCar = () => {
   return (
     <div className="row">
       <div className="col-md-6 mx-auto">
-        {car && (
-          <div
-            className="alert alert-success alert-dismissible fade show"
-            role="alert"
-          >
-            Car successfully added
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-            ></button>
-          </div>
-        )}
-        {error && (
-          <div
-            className="alert alert-danger alert-dismissible fade show"
-            role="alert"
-          >
-            {error}
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-            ></button>
-          </div>
-        )}
-
         <form
           className="form-signin m-4"
           onSubmit={handleSubmit(submitHandler)}
         >
           <h1 className="h3 mb-3 font-weight-normal">Add Car</h1>
-          {error && <div className="alert alert-danger">{error}</div>}
+
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
               Name
@@ -129,6 +102,24 @@ const AddCar = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="image" className="form-label">
+              Brand
+            </label>
+            <input
+              type="text"
+              name="brand"
+              className={`form-control ${
+                errors?.brand?.message ? "is-invalid" : ""
+              }`}
+              id="brand"
+              placeholder="Brand"
+              {...register("brand", {
+                required: "Brand is required",
+              })}
+            />
+            <div className="invalid-feedback">Brand is required</div>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="image" className="form-label">
               Image
             </label>
             <input
@@ -147,20 +138,39 @@ const AddCar = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="comment" className="form-label">
-              Comment
+              Location
             </label>
-            <textarea
-              id="comment"
-              name="comment"
+            <input
+              type="text"
+              name="location"
               className={`form-control ${
-                errors?.comment?.message ? "is-invalid" : ""
+                errors?.location?.message ? "is-invalid" : ""
               }`}
-              placeholder="comment"
-              {...register("comment", {
-                required: "comment is required",
+              id="location"
+              placeholder="location"
+              {...register("location", {
+                required: "Location is required",
               })}
             />
-            <div className="invalid-feedback">comment is required</div>
+            <div className="invalid-feedback">Location is required</div>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="comment" className="form-label">
+              Mileage
+            </label>
+            <input
+              type="number"
+              name="mileage"
+              className={`form-control ${
+                errors?.mileage?.message ? "is-invalid" : ""
+              }`}
+              id="mileage"
+              placeholder="mileage"
+              {...register("mileage", {
+                required: "mileage is required",
+              })}
+            />
+            <div className="invalid-feedback">mileage is required</div>
           </div>
           <button
             className="btn btn-lg btn-primary btn-block"

@@ -4,6 +4,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { signout } from "../../actions/authActions";
 
 const Navigation = () => {
+  const toggleButton = useRef(null);
   const dispatch = useDispatch();
   const input = useRef(null);
   const { user, token } = useSelector((state) => state.auth);
@@ -25,11 +26,29 @@ const Navigation = () => {
     push(`/search?title=${value}`);
   };
 
+  const onLinkClickhandler = () => {
+    if (
+      window.innerWidth <= 991 &&
+      !toggleButton.current.classList.contains("collapsed")
+    ) {
+      const clickEvent = new MouseEvent("click", {
+        view: window,
+        bubbles: true,
+        cancelable: false,
+      });
+      toggleButton.current.dispatchEvent(clickEvent);
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container">
-        <Link className="navbar-brand" to="/">
+        <Link onClick={onLinkClickhandler} className="navbar-brand" to="/">
           <i className="fas fa-car"></i>
+        </Link>
+        <Link className="cartIcon cart-mobile" to="/cart">
+          <span className="itemAmount">{cars.length}</span>
+          <i className="fas fa-cart-plus"></i>
         </Link>
         <button
           className="navbar-toggler"
@@ -39,12 +58,13 @@ const Navigation = () => {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          ref={toggleButton}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
+            <li onClick={onLinkClickhandler} className="nav-item">
               <Link
                 className={`nav-link ${pathname === "/" ? "active" : ""}`}
                 to="/"
@@ -54,7 +74,7 @@ const Navigation = () => {
             </li>
             {isLoggedin && (
               <>
-                <li className="nav-item">
+                <li onClick={onLinkClickhandler} className="nav-item">
                   <Link
                     className={`nav-link ${
                       pathname === "/profile" ? "active" : ""
@@ -67,6 +87,7 @@ const Navigation = () => {
                 {isAdmin && (
                   <li className="nav-item">
                     <Link
+                      onClick={onLinkClickhandler}
                       className={`nav-link ${
                         pathname === "/dashboard" ? "active" : ""
                       }`}
@@ -78,6 +99,7 @@ const Navigation = () => {
                 )}
                 <li className="nav-item">
                   <Link
+                    onClick={onLinkClickhandler}
                     className={`nav-link ${
                       pathname === "/add-car" ? "active" : ""
                     }`}
@@ -94,7 +116,7 @@ const Navigation = () => {
                     }`}
                     to="/logout"
                   >
-                    Logout
+                    Log out
                   </Link>
                 </li>
               </>
@@ -104,22 +126,24 @@ const Navigation = () => {
               <>
                 <li className="nav-item">
                   <Link
+                    onClick={onLinkClickhandler}
                     className={`nav-link ${
                       pathname === "/signin" ? "active" : ""
                     }`}
                     to="/signin"
                   >
-                    Signin
+                    Sign in
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link
+                    onClick={onLinkClickhandler}
                     className={`nav-link ${
                       pathname === "/signup" ? "active" : ""
                     }`}
                     to="/signup"
                   >
-                    signup
+                    sign up
                   </Link>
                 </li>
               </>
@@ -133,12 +157,16 @@ const Navigation = () => {
               placeholder="Search"
               aria-label="Search"
             />
-            <button className="btn btn-outline-success" type="submit">
+            <button
+              onClick={onLinkClickhandler}
+              className="btn btn-outline-success"
+              type="submit"
+            >
               Search
             </button>
           </form>
 
-          <Link className="cartIcon" to="/cart">
+          <Link className="cartIcon cart-desktop" to="/cart">
             <span className="itemAmount">{cars.length}</span>
             <i className="fas fa-cart-plus"></i>
           </Link>

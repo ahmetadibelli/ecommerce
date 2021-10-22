@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -44,12 +45,19 @@ app.use(cookieParser());
 app.use(expressValidator());
 
 // routes middleware
-
 app.use("/api/auth", authRoutes);
 app.use("/api/car", carRoutes);
 app.use("/api/review", reviewRouts);
 app.use("/api/user", userRoutes);
 app.use("/api/category", categoryRoutes);
+
+// static index.html
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client", "build")));
+  app.use("/", (req, res, next) => {
+    res.send(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
 
 //Not Found Route
 app.all("*", (req, res, next) => {

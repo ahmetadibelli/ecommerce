@@ -31,6 +31,7 @@ exports.userSignupValidator = (req, res, next) => {
 
 exports.carValidator = (req, res, next) => {
   req.check("name", "name is required").notEmpty();
+  req.check("comment", "comment is required").notEmpty();
   req
     .check("price", "price is required")
     .notEmpty()

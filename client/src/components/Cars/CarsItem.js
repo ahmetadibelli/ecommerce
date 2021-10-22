@@ -43,10 +43,18 @@ const ProductItem = ({ car }) => {
             Category: {car.category.name}
           </h6>
           <h6 className="card-subtitle mb-2 text-muted">Price: ${car.price}</h6>
-          <p className="lead">
+          <h6 className="card-subtitle mb-2 text-muted">
+            Mileage: {car.mileage} miles
+          </h6>
+          <h6 className="card-subtitle mb-2 text-muted">Brand: {car.brand}</h6>
+          <h6 className="card-subtitle mb-2 text-muted">
+            Location: {car.location}
+          </h6>
+
+          {/* <p className="lead">
             {car.comment.slice(0, 100)}
             {car.comment.length > 100 ? "..." : ""}
-          </p>
+          </p> */}
           <div className="d-grid">
             {isAdded ? (
               <button

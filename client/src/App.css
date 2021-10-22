@@ -6,6 +6,16 @@
   cursor: pointer;
   color: inherit;
 }
+@media only screen and (min-width: 992px) {
+  .cartIcon.cart-mobile {
+    display: none;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .cartIcon.cart-desktop {
+    display: none;
+  }
+}
 .itemAmount {
   font-size: 1rem;
   position: absolute;

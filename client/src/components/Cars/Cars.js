@@ -8,10 +8,8 @@ const Products = () => {
   const { loading, cars } = useSelector((state) => state.carList);
 
   useEffect(() => {
-    if (!cars.length) {
-      dispatch(getCars());
-    }
-  }, [dispatch, cars]);
+    dispatch(getCars());
+  }, [dispatch]);
 
   return (
     <div className="row">
@@ -20,6 +18,7 @@ const Products = () => {
           <h5>Loading...</h5>
         </div>
       )}
+      {!cars.length && !loading && <h3>No Car Found</h3>}
       {!loading && cars.map((car) => <CarItem key={car._id} car={car} />)}
     </div>
   );

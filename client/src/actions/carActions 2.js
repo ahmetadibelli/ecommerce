@@ -40,12 +40,10 @@ export const addCar = (body, clearInput) => async (dispatch) => {
   try {
     const { data } = await apis.addCar(body);
     dispatch({ type: actionTypes.ADD_CAR_SUCCESS, payload: data.data.car });
-    alert("Car added");
     clearInput();
   } catch (error) {
     console.log(error.response);
     const message = error?.response?.data?.err || "something went wrong";
-    alert(message);
     dispatch({ type: actionTypes.ADD_CAR_FAIL, payload: message });
   }
 };
@@ -74,7 +72,7 @@ export const deleteCar = (id) => async (dispatch) => {
 
 export const searchCar = (title) => async (dispatch) => {
   dispatch({ type: actionTypes.SEARCH_CAR_REQUEST });
-  const query = `name[regex]=${title}&name[options]=i`;
+  const query = `name[regex]=${title}`;
   try {
     const { data } = await apis.allCars(query);
     dispatch({
