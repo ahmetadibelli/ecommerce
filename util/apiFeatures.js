@@ -13,7 +13,7 @@ class ApiFeatures {
       (match) => `$${match}`
     );
     const modifiedQueryObj = JSON.parse(queryStr);
-    console.log(modifiedQueryObj);
+    // console.log(modifiedQueryObj);
     this.query = this.query.find(modifiedQueryObj);
     return this;
   }

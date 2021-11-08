@@ -10,7 +10,7 @@ export const getCategories = () => async (dispatch) => {
       payload: data.data.categories,
     });
   } catch (error) {
-    console.log(error?.response);
+    // console.log(error?.response);
     const message = error?.response?.data?.err || "something went wrong";
     alert(message);
     dispatch({ type: actionTypes.GET_CATEGORY_LIST_FAIL, payload: message });
@@ -25,7 +25,7 @@ export const addCategory = (body) => async (dispatch) => {
       payload: data.data.category,
     });
   } catch (error) {
-    console.log(error?.response);
+    // console.log(error?.response);
     const message = error?.response?.data?.err || "something went wrong";
     alert(message);
     dispatch({ type: actionTypes.ADD_CATEGORY_FAIL, payload: message });
@@ -41,7 +41,7 @@ export const updateCategory = (body, id) => async (dispatch) => {
       payload: data.data.category,
     });
   } catch (error) {
-    console.log(error?.response);
+    // console.log(error?.response);
     const message = error?.response?.data?.err || "something went wrong";
     alert(message);
     dispatch({ type: actionTypes.UPDATE_CATEGORY_FAIL, payload: message });
@@ -56,7 +56,7 @@ export const deleteCategory = (id) => async (dispatch) => {
       payload: id,
     });
   } catch (error) {
-    console.log(error?.response);
+    // console.log(error?.response);
     const message = error?.response?.data?.err || "something went wrong";
     alert(message);
     dispatch({ type: actionTypes.DELETE_CATEGORY_FAIL, payload: message });

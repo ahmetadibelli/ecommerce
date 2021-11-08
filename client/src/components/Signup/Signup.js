@@ -7,7 +7,7 @@ import { signup } from "../../actions/authActions";
 const Signup = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, signupErr } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -15,7 +15,7 @@ const Signup = () => {
   } = useForm();
 
   const submitHandler = (data) => {
-    console.log(data);
+    // console.log(data);
     dispatch(signup(data, push));
   };
 
@@ -27,7 +27,7 @@ const Signup = () => {
           onSubmit={handleSubmit(submitHandler)}
         >
           <h1 className="h3 mb-3 font-weight-normal">sign up</h1>
-          {error && <div className="alert alert-danger">{error}</div>}
+          {signupErr && <div className="alert alert-danger">{signupErr}</div>}
           <div className="mb-3">
             <label htmlFor="fullName" className="form-label">
               Username

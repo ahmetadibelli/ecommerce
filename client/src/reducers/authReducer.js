@@ -2,7 +2,14 @@ import * as actionTypes from "../actions/types/authActionTypes";
 import { UPDATE_USER_SUCCESS } from "../actions/types/userActionTypes";
 
 export const authReducer = (
-  state = { user: {}, token: null, loading: false, error: null },
+  state = {
+    user: {},
+    token: null,
+    loading: false,
+    error: null,
+    signinErr: null,
+    signupErr: null,
+  },
   action
 ) => {
   switch (action.type) {
@@ -20,13 +27,20 @@ export const authReducer = (
         user: action.payload.user,
         token: action.payload.token,
         error: null,
+        signupErr: null,
+        signinErr: null,
       };
     case actionTypes.SIGNUP_FAIL:
+      return {
+        ...state,
+        loading: false,
+        signupErr: action.payload,
+      };
     case actionTypes.SIGNIN_FAIL:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        signinErr: action.payload,
       };
     case actionTypes.UPDATE_USER:
       return {
@@ -46,6 +60,8 @@ export const authReducer = (
         token: null,
         loading: false,
         error: null,
+        signinErr: null,
+        signupErr: null,
       };
     default:
       return state;

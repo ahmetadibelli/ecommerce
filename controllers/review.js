@@ -9,7 +9,7 @@ exports.getAllReviews = async (req, res, next) => {
     const reviews = await Review.find({ car: carId }).sort("-createdAt");
     res.status(200).json({ status: "success", data: { reviews } });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(new AppError(errorHandler(error), 400));
   }
 };
@@ -24,7 +24,7 @@ exports.createReview = async (req, res, next) => {
     const review = await Review.create(req.body);
     res.status(201).json({ status: "success", data: { review } });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(new AppError(errorHandler(error), 400));
   }
 };

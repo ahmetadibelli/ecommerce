@@ -19,7 +19,7 @@ const Profile = () => {
   }, [setValue, user]);
 
   const submitHandler = (data) => {
-    // console.log(data);
+    console.log(data);
     dispatch(updateMe(data));
   };
   return (

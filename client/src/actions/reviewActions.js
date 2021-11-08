@@ -10,7 +10,7 @@ export const getAllReviews = (id) => async (dispatch) => {
       payload: data.data.reviews,
     });
   } catch (error) {
-    console.log(error?.response);
+    // console.log(error?.response);
     const message = error?.response?.data?.err || "something went wrong";
     alert(message);
     dispatch({ type: actionTypes.GET_ALL_CAR_REVIEWS_FAIL, payload: message });
@@ -30,7 +30,7 @@ export const create = (body, close) => async (dispatch) => {
 
     close();
   } catch (error) {
-    console.log(error?.response);
+    // console.log(error?.response);
     const message = error?.response?.data?.err || "something went wrong";
     alert(message);
     dispatch({ type: actionTypes.CREATE_REVIEW_FAIL, payload: message });

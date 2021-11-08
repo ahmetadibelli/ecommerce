@@ -14,7 +14,7 @@ const Search = () => {
     dispatch(searchCar(title));
   }, [dispatch, title]);
 
-  console.log(title);
+  // console.log(title);
   if (loading) {
     return <h3>Loading...</h3>;
   }

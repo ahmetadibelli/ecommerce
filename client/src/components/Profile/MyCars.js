@@ -10,7 +10,7 @@ const MyCars = () => {
     dispatch(getUserCars());
   }, [dispatch]);
   const submitOrder = () => {
-    console.log("hi");
+    // console.log("hi");
   };
   return (
     <div className="col-md-10">

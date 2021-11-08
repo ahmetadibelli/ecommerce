@@ -7,7 +7,7 @@ import { signin } from "../../actions/authActions";
 const Signin = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, signinErr } = useSelector((state) => state.auth);
 
   const {
     register,
@@ -16,7 +16,7 @@ const Signin = () => {
   } = useForm();
 
   const submitHandler = (data) => {
-    console.log(data);
+    // console.log(data);
     dispatch(signin(data, push));
   };
 
@@ -28,7 +28,7 @@ const Signin = () => {
           onSubmit={handleSubmit(submitHandler)}
         >
           <h1 className="h3 mb-3 font-weight-normal">sign in</h1>
-          {error && <div className="alert-danger alert">{error}</div>}
+          {signinErr && <div className="alert-danger alert">{signinErr}</div>}
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
               Email address

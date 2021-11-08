@@ -14,7 +14,7 @@ export const getCars =
         totalCars: data.totalDocuments,
       });
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
       const message = error?.response?.data?.err || "something went wrong";
       dispatch({ type: actionTypes.GET_CARS_FAIL, payload: message });
     }
@@ -30,7 +30,7 @@ export const getUserCars = () => async (dispatch, getState) => {
       payload: data.data.cars,
     });
   } catch (error) {
-    console.log(error.response);
+    // console.log(error.response);
     const message = error?.response?.data?.err || "something went wrong";
     dispatch({ type: actionTypes.GET_USER_CARS_FAIL, payload: message });
   }
@@ -43,7 +43,7 @@ export const addCar = (body, clearInput) => async (dispatch) => {
     alert("Car added");
     clearInput();
   } catch (error) {
-    console.log(error.response);
+    // console.log(error.response);
     const message = error?.response?.data?.err || "something went wrong";
     alert(message);
     dispatch({ type: actionTypes.ADD_CAR_FAIL, payload: message });
@@ -55,7 +55,7 @@ export const updateCar = (body, id) => async (dispatch) => {
     const { data } = await apis.updateCar(body, id);
     dispatch({ type: actionTypes.UPDATE_CAR_SUCCESS, payload: data.data.car });
   } catch (error) {
-    console.log(error.response);
+    // console.log(error.response);
     const message = error?.response?.data?.err || "something went wrong";
     dispatch({ type: actionTypes.UPDATE_CAR_FAIL, payload: message });
   }
@@ -66,7 +66,7 @@ export const deleteCar = (id) => async (dispatch) => {
     await apis.deleteCar(id);
     dispatch({ type: actionTypes.DELETE_CAR_SUCCESS, payload: id });
   } catch (error) {
-    console.log(error.response);
+    // console.log(error.response);
     const message = error?.response?.data?.err || "something went wrong";
     dispatch({ type: actionTypes.DELETE_CAR_FAIL, payload: message });
   }
@@ -83,7 +83,7 @@ export const searchCar = (title) => async (dispatch) => {
       totalCars: data.totalDocuments,
     });
   } catch (error) {
-    console.log(error.response);
+    // console.log(error.response);
     const message = error?.response?.data?.err || "something went wrong";
     dispatch({ type: actionTypes.SEARCH_CAR_FAIL, payload: message });
   }

@@ -6,7 +6,7 @@ import Reviews from "../Reviews/Reviews";
 
 const CarDetails = () => {
   const params = useParams();
-  console.log(params.id);
+  // console.log(params.id);
   const dispatch = useDispatch();
   const { car } = useSelector((state) => state.detailCar);
   const { cars } = useSelector((state) => state.cart);

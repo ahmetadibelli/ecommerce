@@ -2,7 +2,7 @@ const catchAndSendError = (req, res, next) => {
   const errors = req.validationErrors();
   if (errors) {
     const firstError = errors.map((error) => error.msg)[0];
-    console.log(errors);
+    // console.log(errors);
     return res.status(400).json({ err: firstError });
   }
   next();

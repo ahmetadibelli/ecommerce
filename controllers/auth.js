@@ -20,12 +20,12 @@ const signInAndSend = (user, res, statusCode = 200) => {
 };
 
 exports.signup = async (req, res, next) => {
-  console.log("req.body", req.body);
+  // console.log("req.body", req.body);
   try {
     const user = await User.create(req.body);
     signInAndSend(user, res);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(new AppError(errorHandler(error), 400));
   }
 };
